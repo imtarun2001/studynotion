@@ -1,0 +1,22 @@
+export const reviews = [
+  { username: "AliceW", rating: 5, comment: "Absolutely loved it! Highly recommend." },
+  { username: "JohnD23", rating: 4, comment: "Great experience overall. Will return." },
+  { username: "SaraK", rating: 3, comment: "It was okay, nothing too special." },
+  { username: "Mike88", rating: 2, comment: "Service was slow and not very friendly." },
+  { username: "NinaB", rating: 5, comment: "Excellent quality and fast delivery!" },
+  { username: "TomV", rating: 1, comment: "Very disappointed. Would not recommend." },
+  { username: "Emily_Rose", rating: 4, comment: "Good value for the price." },
+  { username: "RajivM", rating: 5, comment: "Perfect in every way. Five stars!" },
+  { username: "ChloeX", rating: 3, comment: "Average. Some things could be improved." },
+  { username: "LeoC", rating: 4, comment: "Satisfied with my purchase. Will buy again." },
+  { username: "Tina99", rating: 2, comment: "Not what I expected, unfortunately." },
+  { username: "BradTheDad", rating: 5, comment: "Fantastic! Exceeded expectations." },
+  { username: "Jessie_22", rating: 4, comment: "Pretty good, just a few issues." },
+  { username: "Omar_Z", rating: 1, comment: "Terrible experience. Never again." },
+  { username: "MayaP", rating: 5, comment: "Amazing product and customer service!" },
+  { username: "AlexG", rating: 3, comment: "Just average. It’s fine." },
+  { username: "LiamB", rating: 4, comment: "Good experience, would recommend." },
+  { username: "ZaraD", rating: 2, comment: "Had high hopes, but was let down." },
+  { username: "VictorR", rating: 5, comment: "Everything was perfect!" },
+  { username: "Nadia_88", rating: 4, comment: "Very pleased with the result." }
+];

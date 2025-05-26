@@ -1,0 +1,76 @@
+import React, { useState } from 'react'
+import Navbar from '../commonComponents/Navbar'
+import PatternImage from '../../assets/Images/frame.png'
+import { useLoginSignupContext } from '../../context/loginSignupContext/LoginSignupContext'
+import OneInput from '../commonComponents/OneInput';
+import TwoInput from '../commonComponents/TwoInput';
+import { useNavigate } from 'react-router-dom';
+import NormalText from '../commonComponents/NormalText';
+
+const LoginSignup = ({headingText,loginBtn,image}) => {
+
+    const {login,signup} = useLoginSignupContext();
+    const arr = ['Student','Instructor'];
+    const [role,setRole] = useState(arr[0]);
+    const [seeLoginPassword,setSeeLoginPassword] = useState(false);
+    const [seeSignupPassword,setSeeSignupPassword] = useState(false);
+    const [seeSignupConfirmPassword,setSeeSignupConfirmPassword] = useState(false);
+
+    const navigate = useNavigate();
+
+  return (
+    <div className='h-screen bg-gray-900 flex flex-col justify-start items-center gap-[5rem] pb-[2rem] py-[10rem] overflow-y-scroll'>
+        <Navbar/>
+        <div className='flex flex-col sm:flex-row w-full justify-between items-center text-white gap-[2rem] sm:gap-0'>
+            <div className='h-full w-full sm:w-1/2 flex flex-col justify-start items-center sm:items-start gap-[2rem] px-[0.5rem] sm:pl-[3rem]'>
+                <div className='flex flex-col w-full justify-center items-start'>
+                    <NormalText text={headingText}/>
+                    <div className='font-semibold text-[1rem] text-gray-600'>Build skills for today, tomorrow, and beyond.</div>
+                    <div className='font-semibold italic text-[1rem] text-cyan-500'>Education to future-proof your career.</div>
+                </div>
+
+                {
+                    login &&
+                    <div className='flex w-full sm:w-3/4 flex-col justify-center items-start gap-[0.5rem]'>
+                        <OneInput type={"email"} name={"email"} id={"email"} label={"Email Address"} placeholder={"enter email"} required={true}/>
+                        <OneInput type={seeLoginPassword ? "text" : "password"} name={"loginPassword"} id={"loginPassword"} label={"Password"} placeholder={"enter password"} seePassword={seeLoginPassword} setSeePassword={setSeeLoginPassword} showPasswordIcon={true} required={true}/>       
+                    </div>
+                }
+                {
+                    signup &&
+                    <div className='flex w-full sm:w-3/4 flex-col justify-center items-start gap-[1rem]'>
+                        <div className='flex justify-center items-center gap-[1rem] p-[0.2rem] border-b-[1px] border-gray-600 rounded-full bg-gray-800'>
+                            {
+                                arr.map((ele) => (
+                                    <div key={ele} className={`flex justify-center font-semibold items-center p-[0.7rem] cursor-pointer rounded-full text-gray-500 hover:text-white ${role === ele ? 'bg-black text-white' : ''}`} onClick={() => setRole(ele)}>
+                                        {ele}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        <TwoInput 
+                                firstInputFieldData={{type: "text",name:"firstName",id:"firstName",label:"First Name",placeholder:"enter first name",required: true}}
+                                secondInputFieldData={{type: "text",name:"lastName",id:"lastName",label:"Last Name",placeholder:"enter last name",required: true}}
+                        />
+                        <OneInput type={"email"} name={"email"} id={"email"} label={"Email Address"} placeholder={"enter email"} required={true}/>
+                        <TwoInput 
+                            firstInputFieldData={{type: seeSignupPassword ? "password" : "text",name:"signUpPassword",id:"signUpPassword",label:"Create Password",placeholder:"enter password",showPasswordIcon: true,seePassword: seeSignupPassword,setSeePassword: setSeeSignupPassword,required: true}}
+                            secondInputFieldData={{type: seeSignupConfirmPassword ? "password" : "text",name:"singupConfirmPassword",id:"singupConfirmPassword",label:"Confirm Password",placeholder:"re-enter password",showPasswordIcon: true,seePassword: seeSignupConfirmPassword,setSeePassword: setSeeSignupConfirmPassword,required: true}}
+                        />
+                    </div>
+                }
+
+                <button className='bg-yellow-400 tracking-tight cursor-pointer w-3/4 flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl' onClick={() => navigate("/verify-email")}>{loginBtn ? 'Log in' : 'Create Account'}</button>
+            </div>
+            <div className='flex w-full sm:w-1/2 justify-center items-center'>
+                <div className='flex w-1/2 relative justify-center items-center'>
+                    <img src={PatternImage} alt="" />
+                    <img src={image} alt="" className='absolute -top-[1rem] -left-[1rem]'/>
+                </div>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default LoginSignup
