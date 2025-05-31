@@ -10,7 +10,7 @@ import { IoClose } from "react-icons/io5";
 const Navbar = () => {
 
     const [showCatalog,setShowCatalog] = useState(false);
-    const {screenSize} = useLoginSignupContext();
+    const {screenSize,canGotoDashboard,setCanGotoDashboard} = useLoginSignupContext();
     const [menuVisible,setMenuVisible] = useState(false);
 
   return (
@@ -36,18 +36,31 @@ const Navbar = () => {
                             }
                         </div>
                     }
-                    <div className='flex justify-center items-center gap-[1rem]'>
-                        <Link to='/login'>
-                            <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
-                                Login
-                            </button>
-                        </Link>
-                        <Link to='/signup'>
-                            <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
-                                Signup
-                            </button>
-                        </Link>
-                    </div>
+                    {
+                        canGotoDashboard ?
+                        <div className='flex justify-center items-center gap-[1rem]'>
+                            <Link to='/'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400' onClick={() => setCanGotoDashboard(false)}>
+                                    Logout
+                                </button>
+                            </Link>
+                        </div>
+
+                        :
+
+                        <div className='flex justify-center items-center gap-[1rem]'>
+                            <Link to='/login'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
+                                    Login
+                                </button>
+                            </Link>
+                            <Link to='/signup'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
+                                    Signup
+                                </button>
+                            </Link>
+                        </div>
+                    }
                 </div>
             }
         </div>
@@ -76,18 +89,29 @@ const Navbar = () => {
         </div>
         {
             screenSize > 830 &&
-            <div className='flex justify-center items-center gap-[1rem]'>
-                <Link to='/login'>
-                    <button className='px-[1rem] py-[0.5rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
-                        Login
-                    </button>
-                </Link>
-                <Link to='/signup'>
-                    <button className='px-[1rem] py-[0.5rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
-                        Signup
-                    </button>
-                </Link>
-            </div>
+            canGotoDashboard ?
+                        <div className='flex justify-center items-center gap-[1rem]'>
+                            <Link to='/'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400' onClick={() => setCanGotoDashboard(false)}>
+                                    Logout
+                                </button>
+                            </Link>
+                        </div>
+
+                        :
+
+                        <div className='flex justify-center items-center gap-[1rem]'>
+                            <Link to='/login'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
+                                    Login
+                                </button>
+                            </Link>
+                            <Link to='/signup'>
+                                <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400'>
+                                    Signup
+                                </button>
+                            </Link>
+                        </div>
         }
     </div>
   )

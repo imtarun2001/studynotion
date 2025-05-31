@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import countryCode from '../../data/countrycode.json'
 import { MdArrowDropDown } from "react-icons/md";
 
-const PhoneInput = () => {
+const PhoneInput = ({value,onChange}) => {
 
     const [country,setCountry] = useState(countryCode[0]);
     const [showCountryList,setShowCountryList] = useState(false);
@@ -25,7 +25,7 @@ const PhoneInput = () => {
                 </div>
             }
             <div className='flex w-1/5 justify-between items-center p-[0.7rem] bg-gray-800 cursor-pointer border-b-[1px] rounded-md border-white font-semibold' onClick={() => setShowCountryList(prev => !prev)}>{country.code}<MdArrowDropDown className='text-xl'/></div>
-            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder='enter phone number' className='flex justify-center w-3/4 items-center p-[0.7rem] bg-gray-800 border-b-[1px] rounded-md border-white placeholder-gray-600'/>
+            <input type="tel" name="phoneNumber" id="phoneNumber" onChange={onChange} value={value} placeholder='enter phone number' className='flex justify-center w-3/4 items-center p-[0.7rem] bg-gray-800 border-b-[1px] rounded-md border-white placeholder-gray-600'/>
         </div>
     </div>
   )

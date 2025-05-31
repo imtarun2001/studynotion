@@ -2,9 +2,13 @@ import React from 'react'
 import Navbar from '../components/commonComponents/Navbar'
 import { IoArrowBackSharp } from "react-icons/io5";
 import { FaClockRotateLeft } from "react-icons/fa6";
+import { useLoginSignupContext } from '../context/loginSignupContext/LoginSignupContext';
+import OneInput from '../components/commonComponents/OneInput';
 
 const VerifyEmail = () => {
-    const arr = ['-','-','-','-','-','-'];
+
+    const {signupFormdata,signupChangeHandler,signupSubmitHandler} = useLoginSignupContext();
+
   return (
     <div className='flex bg-gray-800 flex-col justify-start items-center'>
         <Navbar/>
@@ -14,15 +18,9 @@ const VerifyEmail = () => {
                     <div className='text-[1.8rem] font-semibold text-white'>Verify Email</div>
                     <div className='text-[1.2rem] text-gray-500'>A verification code has been sent to you. Enter the code below</div>
                 </div>
-                <div className='flex justify-between items-center'>
-                    {
-                        arr.map((ele,index) => (
-                            <input key={index} type="text" name="" id="" placeholder={ele} maxLength={1} className='p-[0.5rem] text-[1.2rem] text-center w-1/10 outline outline-white text-white'/>
-                        ))
-                    }
-                </div>
+                <OneInput type={"text"} name={"otp"} id={"otp"} onChange={signupChangeHandler} value={signupFormdata.otp} label={"Enter OTP"} placeholder={"enter otp"}/>
                 <div className='flex w-full justify-center items-center'>
-                    <button className='bg-yellow-400 tracking-tight cursor-pointer w-full flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl'>Verify Email</button>
+                    <button className='bg-yellow-400 tracking-tight cursor-pointer w-full flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl' onClick={signupSubmitHandler}>Verify Email</button>
                 </div>
                 <div className='flex justify-between items-center text-[1.2rem] w-full'>
                     <div className='flex justify-center items-center gap-[0.5rem] text-white cursor-pointer hover:underline'><IoArrowBackSharp/>Back to Signup</div>

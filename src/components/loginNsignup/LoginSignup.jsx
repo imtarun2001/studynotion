@@ -4,19 +4,37 @@ import PatternImage from '../../assets/Images/frame.png'
 import { useLoginSignupContext } from '../../context/loginSignupContext/LoginSignupContext'
 import OneInput from '../commonComponents/OneInput';
 import TwoInput from '../commonComponents/TwoInput';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NormalText from '../commonComponents/NormalText';
+import PhoneInput from '../commonComponents/PhoneInput';
+import axios from 'axios';
+import toast from "react-hot-toast";
+
 
 const LoginSignup = ({headingText,loginBtn,image}) => {
 
-    const {login,signup} = useLoginSignupContext();
+    const {login,signup,signupFormdata,setSignupFormdata,signupChangeHandler,loginFormdata,loginChangeHandler,loginSubmitHandler} = useLoginSignupContext();
     const arr = ['Student','Instructor'];
-    const [role,setRole] = useState(arr[0]);
     const [seeLoginPassword,setSeeLoginPassword] = useState(false);
     const [seeSignupPassword,setSeeSignupPassword] = useState(false);
     const [seeSignupConfirmPassword,setSeeSignupConfirmPassword] = useState(false);
 
     const navigate = useNavigate();
+
+    const ToDoOnClickingCreateAccountButton = async () => {
+        try {
+            await axios.post(`/studynotion/v1/generateOtp`,{email: signupFormdata.email});
+            toast.success(`Otp sent to your email`);
+            navigate('/verify-email');
+        }
+        catch(err) {
+            toast.error(err.message);
+        }
+    };
+
+
+
+
 
   return (
     <div className='h-screen bg-gray-900 flex flex-col justify-start items-center gap-[5rem] pb-[2rem] py-[10rem] overflow-y-scroll'>
@@ -32,8 +50,8 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
                 {
                     login &&
                     <div className='flex w-full sm:w-3/4 flex-col justify-center items-start gap-[0.5rem]'>
-                        <OneInput type={"email"} name={"email"} id={"email"} label={"Email Address"} placeholder={"enter email"} required={true}/>
-                        <OneInput type={seeLoginPassword ? "text" : "password"} name={"loginPassword"} id={"loginPassword"} label={"Password"} placeholder={"enter password"} seePassword={seeLoginPassword} setSeePassword={setSeeLoginPassword} showPasswordIcon={true} required={true}/>       
+                        <OneInput type={"email"} name={"email"} id={"email"} onChange={loginChangeHandler} value={loginFormdata.email} label={"Email Address"} placeholder={"enter email"} required={true}/>
+                        <OneInput type={seeLoginPassword ? "text" : "password"} name={"password"} id={"loginPassword"} onChange={loginChangeHandler} value={loginFormdata.password} label={"Password"} placeholder={"enter password"} seePassword={seeLoginPassword} setSeePassword={setSeeLoginPassword} showPasswordIcon={true} required={true}/>       
                     </div>
                 }
                 {
@@ -42,7 +60,14 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
                         <div className='flex justify-center items-center gap-[1rem] p-[0.2rem] border-b-[1px] border-gray-600 rounded-full bg-gray-800'>
                             {
                                 arr.map((ele) => (
-                                    <div key={ele} className={`flex justify-center font-semibold items-center p-[0.7rem] cursor-pointer rounded-full text-gray-500 hover:text-white ${role === ele ? 'bg-black text-white' : ''}`} onClick={() => setRole(ele)}>
+                                    <div key={ele} className={`flex justify-center font-semibold items-center p-[0.7rem] cursor-pointer rounded-full text-gray-500 hover:text-white ${signupFormdata.role === ele ? 'bg-black text-white' : ''}`}
+                                    onClick={() => setSignupFormdata((prev) => {
+                                        return {
+                                            ...prev,
+                                            role: ele
+                                        };
+                                    })}
+                                    >
                                         {ele}
                                     </div>
                                 ))
@@ -51,16 +76,20 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
                         <TwoInput 
                                 firstInputFieldData={{type: "text",name:"firstName",id:"firstName",label:"First Name",placeholder:"enter first name",required: true}}
                                 secondInputFieldData={{type: "text",name:"lastName",id:"lastName",label:"Last Name",placeholder:"enter last name",required: true}}
+                                onChange={signupChangeHandler}
                         />
-                        <OneInput type={"email"} name={"email"} id={"email"} label={"Email Address"} placeholder={"enter email"} required={true}/>
+                        <OneInput type={"email"} name={"email"} id={"email"} onChange={signupChangeHandler} value={signupFormdata.email} label={"Email Address"} placeholder={"enter email"} required={true}/>
+                        <PhoneInput onChange={signupChangeHandler} value={signupFormdata.phoneNumber}/>
                         <TwoInput 
-                            firstInputFieldData={{type: seeSignupPassword ? "password" : "text",name:"signUpPassword",id:"signUpPassword",label:"Create Password",placeholder:"enter password",showPasswordIcon: true,seePassword: seeSignupPassword,setSeePassword: setSeeSignupPassword,required: true}}
-                            secondInputFieldData={{type: seeSignupConfirmPassword ? "password" : "text",name:"singupConfirmPassword",id:"singupConfirmPassword",label:"Confirm Password",placeholder:"re-enter password",showPasswordIcon: true,seePassword: seeSignupConfirmPassword,setSeePassword: setSeeSignupConfirmPassword,required: true}}
+                            firstInputFieldData={{type: seeSignupPassword ? "text" : "password",name:"password",id:"signUpPassword",label:"Create Password",placeholder:"enter password",showPasswordIcon: true,seePassword: seeSignupPassword,setSeePassword: setSeeSignupPassword,required: true,value: signupFormdata.password}}
+                            secondInputFieldData={{type: seeSignupConfirmPassword ? "text" : "password",name:"confirmPassword",id:"singupConfirmPassword",label:"Confirm Password",placeholder:"re-enter password",showPasswordIcon: true,seePassword: seeSignupConfirmPassword,setSeePassword: setSeeSignupConfirmPassword,required: true,value: signupFormdata.confirmPassword}}
+                            onChange={signupChangeHandler}
                         />
                     </div>
                 }
 
-                <button className='bg-yellow-400 tracking-tight cursor-pointer w-3/4 flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl' onClick={() => navigate("/verify-email")}>{loginBtn ? 'Log in' : 'Create Account'}</button>
+                <button className='bg-yellow-400 tracking-tight cursor-pointer w-3/4 flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl' onClick={loginBtn ? loginSubmitHandler : ToDoOnClickingCreateAccountButton}>{loginBtn ? 'Log in' : 'Create Account'}</button>
+                <div className='w-3/4 text-center font-semibold'>{loginBtn ? <div>Do not have an account? <span><Link to='/signup' className='text-blue-500 hover:text-cyan-300 hover:underline'>Signup</Link></span></div> : <div>Already had an account? <span><Link to='/login' className='text-blue-500 hover:text-cyan-300 hover:underline'>Login</Link></span></div>}</div>
             </div>
             <div className='flex w-full sm:w-1/2 justify-center items-center'>
                 <div className='flex w-1/2 relative justify-center items-center'>

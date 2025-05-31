@@ -1,13 +1,35 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import toast from "react-hot-toast";
 
 export const LoginSignupContext = createContext();
 
 export const LoginSignupContextProvider = ({children}) => {
-    const [login,setLogin] = useState(false);
-    const [signup,setSignup] = useState(false);
 
     const [screenSize,setScreenSize] = useState(window.innerWidth);
+    const location = useLocation();
+    const [login,setLogin] = useState(false);
+    const [signup,setSignup] = useState(false);
+    const [signupFormdata,setSignupFormdata] = useState({
+    
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: "",
+        otp: "",
+        role: "Student"
+    });
+    const [loginFormdata,setLoginFormdata] = useState({
+        email: "",
+        password: ""
+    });
+    const [canGotoDashboard,setCanGotoDashboard] = useState(false);
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -18,9 +40,57 @@ export const LoginSignupContextProvider = ({children}) => {
         return () => window.removeEventListener('resize',handleResize);
     },[]);
 
-    console.log(screenSize);
+    
+    const signupChangeHandler = (event) => {
+        const {name,type,value,checked} = event.target;
+        setSignupFormdata((prev) => {
+            return {
+                ...prev,
+                [name]:type === 'checkbox' ? checked : value
+            }
+        });
+    };
+    
+    const signupSubmitHandler = async (event) => {
+        event.preventDefault();
+        try {
+            console.log(signupFormdata);
+            const createdUser = await axios.post('/studynotion/v1/signup',signupFormdata);
+            toast.success('email registered successfully 🎉');
+            await navigate('/login');
+            console.log(createdUser);
+        } catch(err) {
+            console.log(err.message);
+            toast.error(err.message);
+        }
+    };
 
-    const location = useLocation();
+
+    const loginChangeHandler = (event) => {
+        const {name,type,checked,value} = event.target;
+        setLoginFormdata((prev) => {
+            return {
+                ...prev,
+                [name]:type === "checkbox" ? checked : value
+            };
+        });
+    };
+
+
+    const loginSubmitHandler = async (event) => {
+        event.preventDefault();
+        try {
+            console.log(loginFormdata);
+            const createdUser = await axios.post('/studynotion/v1/login',loginFormdata);
+            toast.success('Logged in successfully');
+            setCanGotoDashboard(true);
+            await navigate('/dashboard');
+            console.log(createdUser);
+        } catch(err) {
+            console.log(err.message);
+            toast.error(err.message);
+        }
+    };
 
     const loginSignupHandler = () => {
         if(location.pathname === '/login') {
@@ -40,7 +110,12 @@ export const LoginSignupContextProvider = ({children}) => {
     const datas = {
         login,setLogin,
         signup,setSignup,
-        screenSize,setScreenSize
+        screenSize,setScreenSize,
+        signupFormdata,setSignupFormdata,
+        signupChangeHandler,signupSubmitHandler,
+        loginFormdata,setLoginFormdata,
+        canGotoDashboard,setCanGotoDashboard,
+        loginChangeHandler,loginSubmitHandler
     };
 
     return <LoginSignupContext.Provider value={datas}>
