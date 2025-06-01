@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { API } from "../../../Api";
 
 export const LoginSignupContext = createContext();
 
@@ -55,7 +56,7 @@ export const LoginSignupContextProvider = ({children}) => {
         event.preventDefault();
         try {
             console.log(signupFormdata);
-            const createdUser = await axios.post('/studynotion/v1/signup',signupFormdata);
+            const createdUser = await API.post('/studynotion/v1/signup',signupFormdata);
             toast.success('email registered successfully 🎉');
             await navigate('/login');
             console.log(createdUser);
@@ -81,7 +82,7 @@ export const LoginSignupContextProvider = ({children}) => {
         event.preventDefault();
         try {
             console.log(loginFormdata);
-            const createdUser = await axios.post('/studynotion/v1/login',loginFormdata);
+            const createdUser = await API.post('/studynotion/v1/login',loginFormdata);
             toast.success('Logged in successfully');
             setCanGotoDashboard(true);
             await navigate('/dashboard');
