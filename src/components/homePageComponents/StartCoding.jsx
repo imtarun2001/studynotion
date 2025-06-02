@@ -8,7 +8,7 @@ const StartCoding = () => {
 
   return (
     <div>
-        <UnlockCodingNStartCoding color={"cyan-300"} reverse={true} unlockCoding={false} typingText={typingText} totalLines={totalLines}/>
+        <UnlockCodingNStartCoding color={"lightBlue"} reverse={true} unlockCoding={false} typingText={typingText} totalLines={totalLines}/>
     </div>
   )
 }

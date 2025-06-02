@@ -46,18 +46,22 @@ const UnlockCodingNStartCoding = ({color,reverse,unlockCoding,typingText,totalLi
                 </div>
             </div>
         }
-        <div className={`w-[90%] sm:w-[50%] md:w-[400px] border border-${color} flex text-${color} gap-[1rem] pl-[1rem] py-[1rem]`}>
-            <div className='w-[3%] flex flex-col'>
+        <div className='w-[90%] sm:w-[50%] md:w-[400px] flex text-${color} gap-[1rem] pl-[1rem] py-[1rem]'
+        style={{color: color,border: `2px solid ${color}`,boxShadow: `0px 0px 30px ${color}`}}
+        >
+            {/* <div className={`h-2/3 w-2/3 absolute top-0 left-0 rounded-full`} style={{boxShadow: `0px 0px 10px ${color}`}}></div> */}
+            <div className='w-[3%] flex flex-col z-10'>
                 {
                     totalLines.map((line) => (
                         <span key={line}>{line}</span>
                     ))
                 }
             </div>
-            <div className='w-[90%] flex flex-col'>
+            <div className='w-[90%] flex flex-col z-10'>
                 <TypeAnimation
+                    key={typingText}
                     sequence={[
-                        typingText,5000
+                        typingText,3000,"",500
                     ]}
                     wrapper="div"
                     cursor={true}
