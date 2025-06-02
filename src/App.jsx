@@ -7,8 +7,9 @@ import NotFound from './pages/NotFound'
 import ContactUs from './pages/ContactUs'
 import AboutUs from './pages/AboutUs'
 import VerifyEmail from './pages/VerifyEmail'
-import Dashboard from './pages/Dashboard'
-import Private from './pages/Private'
+import StudentDashboard from './pages/StudentDashboard'
+import InstructorDashboard from './pages/InstructorDashboard'
+import AdminDashboard from './pages/AdminDashboard'
 
 const App = () => {
   return (
@@ -20,7 +21,9 @@ const App = () => {
         <Route path='/about' element={<AboutUs/>} />
         <Route path='/contact' element={<ContactUs/>} />
         <Route path='/verify-email' element={<VerifyEmail/>} />
-        <Route path='/dashboard' element={<Private><Dashboard/></Private>} />
+        <Route path='/student-dashboard' element={<StudentDashboard/>} />
+        <Route path='/instructor-dashboard' element={<InstructorDashboard/>} />
+        <Route path='/admin-dashboard' element={<AdminDashboard/>} />
         <Route path='*' element={<NotFound/>}/>
      </Routes>
     </div>

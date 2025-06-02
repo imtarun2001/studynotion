@@ -37,7 +37,7 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
 
 
   return (
-    <div className='h-screen bg-gray-900 flex flex-col justify-start items-center gap-[5rem] pb-[2rem] py-[10rem] overflow-y-scroll'>
+    <div className='h-screen relative bg-gray-900 flex flex-col justify-start items-center gap-[5rem] pb-[2rem] py-[10rem] overflow-y-scroll'>
         <Navbar/>
         <div className='flex flex-col sm:flex-row w-full justify-between items-center text-white gap-[2rem] sm:gap-0'>
             <div className='h-full w-full sm:w-1/2 flex flex-col justify-start items-center sm:items-start gap-[2rem] px-[0.5rem] sm:pl-[3rem]'>

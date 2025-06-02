@@ -10,7 +10,7 @@ import { IoClose } from "react-icons/io5";
 const Navbar = () => {
 
     const [showCatalog,setShowCatalog] = useState(false);
-    const {screenSize,canGotoDashboard,setCanGotoDashboard} = useLoginSignupContext();
+    const {screenSize,canGotoDashboard,logoutSubmitHandler} = useLoginSignupContext();
     const [menuVisible,setMenuVisible] = useState(false);
 
   return (
@@ -64,11 +64,9 @@ const Navbar = () => {
                 {
                     canGotoDashboard ?
                     <div className='flex justify-center items-center gap-[1rem]'>
-                        <Link to='/'>
-                            <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400' onClick={() => setCanGotoDashboard(false)}>
+                        <button className='px-[0.6rem] py-[0.3rem] border border-gray-700 text-white rounded-md cursor-pointer hover:border-gray-400' onClick={logoutSubmitHandler}>
                                 Logout
-                            </button>
-                        </Link>
+                        </button>
                     </div>
 
                     :
