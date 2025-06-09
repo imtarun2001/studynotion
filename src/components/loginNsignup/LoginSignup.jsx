@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 const LoginSignup = ({headingText,loginBtn,image}) => {
 
-    const {login,signup,signupFormdata,setSignupFormdata,signupChangeHandler,loginFormdata,loginChangeHandler,loginSubmitHandler} = useLoginSignupContext();
+    const {inLogin,signupFormdata,setSignupFormdata,signupChangeHandler,loginFormdata,loginChangeHandler,loginSubmitHandler} = useLoginSignupContext();
     const arr = ['Student','Instructor'];
     const [seeLoginPassword,setSeeLoginPassword] = useState(false);
     const [seeSignupPassword,setSeeSignupPassword] = useState(false);
@@ -48,14 +48,13 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
                 </div>
 
                 {
-                    login &&
+                    inLogin ?
                     <div className='flex w-full sm:w-3/4 flex-col justify-center items-start gap-[0.5rem]'>
                         <OneInput type={"email"} name={"email"} id={"email"} onChange={loginChangeHandler} value={loginFormdata.email} label={"Email Address"} placeholder={"enter email"} required={true}/>
                         <OneInput type={seeLoginPassword ? "text" : "password"} name={"password"} id={"loginPassword"} onChange={loginChangeHandler} value={loginFormdata.password} label={"Password"} placeholder={"enter password"} seePassword={seeLoginPassword} setSeePassword={setSeeLoginPassword} showPasswordIcon={true} required={true}/>       
                     </div>
-                }
-                {
-                    signup &&
+                    :
+
                     <div className='flex w-full sm:w-3/4 flex-col justify-center items-start gap-[1rem]'>
                         <div className='flex justify-center items-center gap-[1rem] p-[0.2rem] border-b-[1px] border-gray-600 rounded-full bg-gray-800'>
                             {
@@ -89,7 +88,28 @@ const LoginSignup = ({headingText,loginBtn,image}) => {
                 }
 
                 <button className='bg-yellow-400 tracking-tight cursor-pointer w-3/4 flex justify-center items-center py-[0.7rem] text-[1.1rem] font-bold text-black rounded-xl' onClick={loginBtn ? loginSubmitHandler : ToDoOnClickingCreateAccountButton}>{loginBtn ? 'Log in' : 'Create Account'}</button>
-                <div className='w-3/4 text-center font-semibold'>{loginBtn ? <div>Do not have an account? <span><Link to='/signup' className='text-blue-500 hover:text-cyan-300 hover:underline'>Signup</Link></span></div> : <div>Already had an account? <span><Link to='/login' className='text-blue-500 hover:text-cyan-300 hover:underline'>Login</Link></span></div>}</div>
+                <div className='w-3/4 text-center font-semibold'>
+                    {
+                        loginBtn ?
+                        <div className='flex justify-center items-center gap-[0.3rem]'>
+                            Do not have an account?
+                            <Link to='/signup'>
+                                <span className='text-blue-500 hover:text-cyan-300 hover:underline'>
+                                    Signup
+                                </span>
+                            </Link>
+                        </div>
+                        :
+                        <div className='flex justify-center items-center gap-[0.3rem]'>
+                            Already had an account?
+                            <Link to='/login'>
+                                <span className='text-blue-500 hover:text-cyan-300 hover:underline'>
+                                    Login
+                                </span>
+                            </Link>
+                        </div>
+                    }
+                </div>
             </div>
             <div className='flex w-full sm:w-1/2 justify-center items-center'>
                 <div className='flex w-1/2 relative justify-center items-center'>

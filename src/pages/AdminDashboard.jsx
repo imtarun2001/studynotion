@@ -1,30 +1,9 @@
-import React, { useEffect } from "react";
-import { API } from "../../Api";
-import toast from "react-hot-toast";
-import Navbar from "../components/commonComponents/Navbar";
+import React from 'react'
 
 const AdminDashboard = () => {
-  const fetchUser = async () => {
-    try {
-      await API.get("/admin-dashboard");
-    } catch (err) {
-      console.log(err.message);
-      toast.error(err.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
-    <div className="w-full min-h-screen flex flex-col justify-start items-center">
-      <Navbar />
-      <div className="w-screen flex flex-col justify-center items-center gap-[2rem] pt-[5rem] md:pt-[10rem] text-black">
-        <div>Hello user, this is admin dashboard</div>
-      </div>
-    </div>
-  );
-};
+    <div>AdminDashboard</div>
+  )
+}
 
-export default AdminDashboard;
+export default AdminDashboard

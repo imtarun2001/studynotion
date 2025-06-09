@@ -44,7 +44,7 @@ const ContactUs = () => {
             <div className='flex flex-col justify-center items-start'>
               <NormalText text={"Got an Idea? We've got the skills."}/>
               <motion.div initial={{opacity:0,x:300}} whileInView={{opacity:1,x:0}} transition={transition}><HighlightedText color={true} text={"Let's team up"}/></motion.div>
-              <FadedText justify={true} text={"Tell us more about yourself and what you're got in mind."}/>
+              <FadedText justify={true} text={"Tell us more about yourself and what you've got in mind."}/>
             </div>
             <TwoInput 
               firstInputFieldData={{type: "text",name:"firstName",id:"firstName",label:"First Name",placeholder:"enter first name"}}

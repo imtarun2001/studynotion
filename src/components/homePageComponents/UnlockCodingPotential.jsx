@@ -9,7 +9,7 @@ const UnlockCodingPotential = () => {
 
   return (
     <div>
-        <UnlockCodingNStartCoding color={"coral"} reverse={false} unlockCoding={true} typingText={typingText} totalLines={totalLines}/>
+        <UnlockCodingNStartCoding color={"goldenrod"} reverse={false} unlockCoding={true} typingText={typingText} totalLines={totalLines}/>
     </div>
   )
 }
